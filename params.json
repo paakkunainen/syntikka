@@ -34,19 +34,19 @@
     },
     "month": {
       "sdtype": "categorical"
-    }
+    },
     "duration": {
       "sdtype": "numerical"
-    }
+    },
     "campaign": {
       "sdtype": "numerical"
-    }
+    },
     "pdays": {
       "sdtype": "numerical"
-    }
+    },
     "previous": {
       "sdtype": "numerical"
-    }
+    },
     "poutcome": {
       "sdtype": "categorical"
     }
