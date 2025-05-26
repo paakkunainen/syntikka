@@ -12,10 +12,17 @@ import mlflow
 from mlflow.models.signature import infer_signature
 import logging
 
+logging.basicConfig(
+    filename="app.log",
+    level=logging.DEBUG,
+    format="%(asctime)s %(levelname)s %(message)s",
+)
+
 if __name__ == "__main__":
     mlflow.set_tracking_uri(uri="http://127.0.0.1:8080")
     mlflow.set_experiment("Syntikka")
     logging.info("Reading params...")
+
     with open("./params.json", "r") as params_json:
         params = json.load(params_json)
         categorical_columns = [
@@ -31,7 +38,7 @@ if __name__ == "__main__":
 
     dataset = pd.read_csv("./data/bank-full.csv", delimiter=";")
 
-    hyperparams = {
+    params = {
         "epochs": 25,
         "learning_rate": 1e-3,
         "batch_size": 32,
@@ -114,7 +121,7 @@ if __name__ == "__main__":
         f.write(str(summary(vae)))
     mlflow.log_artifact("model_summary.txt")
 
-    vae.fit(train_loader=train_loader, val_loader=val_loader, n_epochs=params[" pochs"])
+    vae.fit(train_loader=train_loader, val_loader=val_loader, n_epochs=params["epochs"])
 
     syn_t = vae.generate(len(dataset))
 

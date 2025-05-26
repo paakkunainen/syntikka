@@ -43,7 +43,7 @@ class VAE(nn.Module):
             self.optimizer = optimizer
 
         self.scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-            self.optimizer, mode="min", factor=0.1, patience=3, verbose=True
+            self.optimizer, mode="min", factor=0.1, patience=3
         )
 
         self.kl_anneal_epochs = kl_anneal_epochs

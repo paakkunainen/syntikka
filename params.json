@@ -49,6 +49,9 @@
     },
     "poutcome": {
       "sdtype": "categorical"
+    },
+    "y": {
+      "sdtype": "categorical"
     }
   }
 }
