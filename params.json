@@ -1,6 +1,10 @@
 {
   "seed": 1337,
+  "tracking_uri": "http://127.0.0.1:8080",
   "primary_key": "id",
+  "data_path": "./data/bank-full.csv",
+  "delimiter": ";",
+  "output_path": "./data/",
   "columns": {
     "age": {
       "sdtype": "numerical"
