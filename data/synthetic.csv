@@ -1,4 +1,4 @@
-,age,job,marital,education,default,balance,housing,loan,contact,day,month,duration,campaign,pdays,previous,poutcome,y
+age,job,marital,education,default,balance,housing,loan,contact,day,month,duration,campaign,pdays,previous,poutcome,y
 0,41,blue-collar,married,secondary,no,593,yes,no,cellular,14,may,36,6,356,1,failure,no
 1,28,technician,married,secondary,no,1852,yes,no,cellular,5,feb,420,2,-1,0,unknown,no
 2,58,blue-collar,married,primary,no,1204,yes,yes,cellular,20,jul,92,8,-1,0,unknown,no
