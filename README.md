@@ -2,7 +2,7 @@
 
 # syntikka
 
-[![Python](https://img.shields.io/badge/Lua-blue.svg?style=for-the-badge&logo=lua)](http://www.python.org)
+[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](http://www.python.org)
 [![Pytorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://neovim.io)
 
 <img alt="syntikka" height="280" src="/assets/syntikka.png" />
