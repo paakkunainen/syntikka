@@ -1,0 +1,54 @@
+{
+  "seed": 1337,
+  "primary_key": "id",
+  "columns": {
+    "age": {
+      "sdtype": "numerical"
+    },
+    "job": {
+      "sdtype": "categorical"
+    },
+    "marital": {
+      "sdtype": "categorical"
+    },
+    "education": {
+      "sdtype": "categorical"
+    },
+    "default": {
+      "sdtype": "categorical"
+    },
+    "balance": {
+      "sdtype": "numerical"
+    },
+    "housing": {
+      "sdtype": "categorical"
+    },
+    "loan": {
+      "sdtype": "categorical"
+    },
+    "contact": {
+      "sdtype": "categorical"
+    },
+    "day": {
+      "sdtype": "numerical"
+    },
+    "month": {
+      "sdtype": "categorical"
+    }
+    "duration": {
+      "sdtype": "numerical"
+    }
+    "campaign": {
+      "sdtype": "numerical"
+    }
+    "pdays": {
+      "sdtype": "numerical"
+    }
+    "previous": {
+      "sdtype": "numerical"
+    }
+    "poutcome": {
+      "sdtype": "categorical"
+    }
+  }
+}
