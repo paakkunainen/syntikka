@@ -7,9 +7,9 @@ import torch.nn.functional as F
 from tqdm import tqdm
 import mlflow
 from typing import List, Dict
-from decoder import Decoder
-from encoder import Encoder
-from noiser import Noiser
+from core.decoder import Decoder
+from core.encoder import Encoder
+from core.noiser import Noiser
 
 
 class VAE(nn.Module):
@@ -180,7 +180,11 @@ class VAE(nn.Module):
             )
             if epoch % log_every == 0:
                 print(
-                    f"[epoch {epoch}] β={beta:.3f} | nll={avg_rc_cat + avg_rc_cont:.2f} | kl_divergence={avg_kl:.2f} | elbo={avg_loss:.2f} | val loss = {avg_val_loss:.2f}"
+                    f"[epoch {epoch}] β={beta:.3f} | nll={
+                        avg_rc_cat + avg_rc_cont:.2f
+                    } | kl_divergence={avg_kl:.2f} | elbo={avg_loss:.2f} | val loss = {
+                        avg_val_loss:.2f
+                    }"
                 )
 
     def _get_kl_weight(self, epoch: int, method: str = "linear") -> float:
