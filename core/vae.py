@@ -73,16 +73,16 @@ class VAE(nn.Module):
         processed = torch.empty_like(out)
         i = 0
         for n_cat in self.num_categories:
-            processed[:, i : i + n_cat] = self.gumbel_softmax_sample(
-                out[:, i : i + n_cat], gumbel_temp
+            processed[:, i: i + n_cat] = self.gumbel_softmax_sample(
+                out[:, i: i + n_cat], gumbel_temp
             )
             i += n_cat
 
         # Continuous
-        processed[:, -self.num_continuous :] = out[
-            :, -self.num_continuous :
-        ] + torch.exp(self.noiser(out[:, -self.num_continuous :])) * torch.randn_like(
-            out[:, -self.num_continuous :]
+        processed[:, -self.num_continuous:] = out[
+            :, -self.num_continuous:
+        ] + torch.exp(self.noiser(out[:, -self.num_continuous:])) * torch.randn_like(
+            out[:, -self.num_continuous:]
         )
         return processed
 
@@ -95,18 +95,18 @@ class VAE(nn.Module):
         # categorical log‑likelihood
         cat_loglik, idx, i = 0.0, 0, 0
         for n_cat in self.num_categories:
-            idx = torch.argmax(x[:, i : i + n_cat], dim=1)
+            idx = torch.argmax(x[:, i: i + n_cat], dim=1)
             cat_loglik += -F.cross_entropy(
-                recon[:, i : i + n_cat], idx, reduction="sum"
+                recon[:, i: i + n_cat], idx, reduction="sum"
             )
             i += n_cat
         recon_cat = -cat_loglik
 
         # continuous log‑likelihood (gaussian)
-        cont_mu = recon[:, -self.num_continuous :]
+        cont_mu = recon[:, -self.num_continuous:]
         cont_sigma = torch.exp(self.noiser(cont_mu))
         gauss = Normal(cont_mu, cont_sigma)
-        cont_loglik = gauss.log_prob(x[:, -self.num_continuous :]).sum()
+        cont_loglik = gauss.log_prob(x[:, -self.num_continuous:]).sum()
         recon_cont = -cont_loglik
 
         kl = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp(), dim=1)
@@ -198,7 +198,8 @@ class VAE(nn.Module):
             return beta
         if method == "logistic":
             progress = epoch / self.kl_anneal_epochs
-            beta = float(self.target_kl_weight) / (1 + np.exp(-10 * (progress - 0.5)))
+            beta = float(self.target_kl_weight) / \
+                (1 + np.exp(-10 * (progress - 0.5)))
             return beta
         if method == "stable":
             return self.target_kl_weight

@@ -47,19 +47,19 @@ if __name__ == "__main__":
     dataset = pd.read_csv(params["data_path"], delimiter=params["delimiter"])
 
     hyperparams = {
-        "epochs": 10,
+        "epochs": 20,
         "learning_rate": 1e-3,
         "batch_size": 32,
         "kl_anneal_epochs": 10,
         "kl_anneal_method": "stable",
-        "starting_kl_weight": 0.5,
-        "target_kl_weight": 1.0,
+        "starting_kl_weight": 1.0,
+        "target_kl_weight": 2.0,
         "dropout": 0.1,
         "latent_dim": 16,
         "hidden_dim": 64,
         "activation_function": torch.nn.Tanh,
         "optimizer": torch.optim.Adam,
-        "scaler": "GMM",
+        "scaler": "standard",
         "num_layers": 2,
     }
 
