@@ -7,7 +7,7 @@
 
 <img alt="syntikka" height="280" src="/assets/syntikka.png" />
 
-**A minimalistic logo for "syntikka", featuring the text "syn" alongside a stylized great spotted woodpecker playing a small synthesizer. -GPT-4o**
+_A minimalistic logo for "syntikka", featuring the text "syn" alongside a stylized great spotted woodpecker playing a small synthesizer. -GPT-4o_
 
 </div>
 
