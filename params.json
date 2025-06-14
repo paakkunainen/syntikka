@@ -36,9 +36,8 @@
     "vastaanotto_aika_t": {
         "sdtype": "numerical"
     },
-      "valmis_aika_t": {
+    "valmis_aika_t": {
         "sdtype": "numerical"
     }
   }
-}
 }
