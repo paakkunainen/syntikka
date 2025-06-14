@@ -11,6 +11,27 @@ from core.decoder import Decoder
 from core.encoder import Encoder
 from core.noiser import Noiser
 
+class EarlyStopping:
+    """Monitors validations metrics and stops training when the model stops improving."""
+    def __init__(self, patience: int = 5, delta: int = 0, verbose: bool = False):
+        self.patience = patience
+        self.delta = delta
+        self.verbose = verbose
+        self.best_loss = None
+        self.no_improvement_count = 0
+        self.stop_training = False
+    
+    def check_early_stop(self, val_loss: float):
+        if self.best_loss is None or val_loss < self.best_loss - self.delta:
+            self.best_loss = val_loss
+            self.no_improvement_count = 0
+        else:
+            self.no_improvement_count += 1
+            if self.no_improvement_count >= self.patience:
+                self.stop_training = True
+                if self.verbose:
+                    print("Stopping early as no improvement have been observed.")
+
 
 class VAE(nn.Module):
     def __init__(
@@ -69,7 +90,7 @@ class VAE(nn.Module):
         z = torch.randn(n, self.encoder.latent_dim, device=self.device)
         out = self.decoder(z)
 
-        # Process categoricals with Gumbel‑softmax
+        # gumbel softmax
         processed = torch.empty_like(out)
         i = 0
         for n_cat in self.num_categories:
@@ -78,7 +99,7 @@ class VAE(nn.Module):
             )
             i += n_cat
 
-        # Continuous
+        # add noise to continuous values
         processed[:, -self.num_continuous:] = out[
             :, -self.num_continuous:
         ] + torch.exp(self.noiser(out[:, -self.num_continuous:])) * torch.randn_like(
@@ -92,7 +113,7 @@ class VAE(nn.Module):
         z = mu + std * torch.randn_like(std)
         recon = self.decoder(z)
 
-        # categorical log‑likelihood
+        # categorical log‑likelihood (cross-entropy)
         cat_loglik, idx, i = 0.0, 0, 0
         for n_cat in self.num_categories:
             idx = torch.argmax(x[:, i: i + n_cat], dim=1)
@@ -119,6 +140,7 @@ class VAE(nn.Module):
         val_loader: DataLoader = None,
         n_epochs: int = 100,
         log_every: int = 1,
+        early_stopper: EarlyStopping = None,
     ) -> None:
         for epoch in range(n_epochs):
             total_loss = 0.0
@@ -153,7 +175,7 @@ class VAE(nn.Module):
             self.history["kl"].append(avg_kl)
             self.history["beta"].append(beta)
 
-            # Validation step and scheduler update
+            # calc validation loss and update scheduler
             if val_loader is not None:
                 self.eval()
                 with torch.no_grad():
@@ -164,6 +186,13 @@ class VAE(nn.Module):
                         val_loss += (rc_cat + rc_cont + beta * kl).item()
                     avg_val_loss = val_loss / len(val_loader)
                     self.scheduler.step(avg_val_loss)
+
+                if early_stopper:
+                    early_stopper.check_early_stop(val_loss)
+                    if early_stopper.stop_training:
+                        print(f"Early stopping at epoch {epoch}.")
+                        break
+
             else:
                 self.scheduler.step(avg_loss)
 
@@ -180,11 +209,11 @@ class VAE(nn.Module):
             )
             if epoch % log_every == 0:
                 print(
-                    f"[epoch {epoch}] β={beta:.3f} | nll={
-                        avg_rc_cat + avg_rc_cont:.2f
-                    } | kl_divergence={avg_kl:.2f} | elbo={avg_loss:.2f} | val loss = {
-                        avg_val_loss:.2f
-                    }"
+                    (
+                        f"[epoch {epoch}] β={beta:.3f} | nll={avg_rc_cat + avg_rc_cont:.2f} "
+                        f"| kl_divergence={avg_kl:.2f} | elbo={avg_loss:.2f} "
+                        f"| val loss = {avg_val_loss:.2f}"
+                    )
                 )
 
     def _get_kl_weight(self, epoch: int, method: str = "linear") -> float:

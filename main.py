@@ -11,11 +11,12 @@ from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader, TensorDataset
 from core.decoder import Decoder
 from core.encoder import Encoder
-from core.vae import VAE
+from core.vae import VAE, EarlyStopping
 import mlflow
 from mlflow.models.signature import infer_signature
 import logging
 import sys
+import itertools
 
 logging.basicConfig(
     stream=sys.stdout,
@@ -41,7 +42,7 @@ if __name__ == "__main__":
         ]
 
     mlflow.set_tracking_uri(uri=params["tracking_uri"])
-    mlflow.set_experiment("Syntikka")
+    mlflow.set_experiment("syntikka_experiments")
 
     set_seed(params["seed"])
     dataset = pd.read_csv(params["data_path"], delimiter=params["delimiter"])
@@ -57,7 +58,7 @@ if __name__ == "__main__":
         "dropout": 0.1,
         "latent_dim": 16,
         "hidden_dim": 64,
-        "activation_function": torch.nn.Tanh,
+        "activation_function": torch.nn.ReLU,
         "optimizer": torch.optim.Adam,
         "scaler": "standard",
         "num_layers": 2,
@@ -132,8 +133,13 @@ if __name__ == "__main__":
         f.write(str(summary(vae)))
     mlflow.log_artifact("model_summary.txt")
 
+    early_stopper = EarlyStopping(patience=5, delta=0.0, verbose=True)
+
     vae.fit(
-        train_loader=train_loader, val_loader=val_loader, n_epochs=hyperparams["epochs"]
+        train_loader=train_loader, 
+        val_loader=val_loader, 
+        n_epochs=hyperparams["epochs"], 
+        early_stopper=early_stopper
     )
 
     syn_t = vae.generate(len(dataset))

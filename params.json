@@ -1,61 +1,44 @@
 {
   "seed": 1337,
-  "tracking_uri": "http://127.0.0.1:8080",
+  "tracking_uri": "/Users/juuso.paakkunainen@productivityleap.com/",
   "primary_key": "id",
-  "data_path": "./data/bank-full.csv",
-  "delimiter": ";",
+  "data_path": "/Workspace/Users/juuso.paakkunainen@productivityleap.com/kaynti.csv",
+  "delimiter": ",",
   "output_path": "./data/",
   "columns": {
-    "age": {
-      "sdtype": "numerical"
+    "triage": {
+        "sdtype": "categorical"
     },
-    "job": {
-      "sdtype": "categorical"
+    "organisaatio": {
+        "sdtype": "categorical"
     },
-    "marital": {
-      "sdtype": "categorical"
+    "tiimi": {
+        "sdtype": "categorical"
+    }, 
+    "icpc2": {
+        "sdtype": "categorical"
     },
-    "education": {
-      "sdtype": "categorical"
+    "erikoisala": {
+        "sdtype": "categorical"
     },
-    "default": {
-      "sdtype": "categorical"
+    "kunta": {
+        "sdtype": "categorical"
     },
-    "balance": {
-      "sdtype": "numerical"
+    "ika": {
+        "sdtype": "categorical"
     },
-    "housing": {
-      "sdtype": "categorical"
+    "ilmoittautumis_aika_t": {
+        "sdtype": "numerical"
     },
-    "loan": {
-      "sdtype": "categorical"
+    "haastattelu_aika_t": {
+        "sdtype": "numerical"
     },
-    "contact": {
-      "sdtype": "categorical"
+    "vastaanotto_aika_t": {
+        "sdtype": "numerical"
     },
-    "day": {
-      "sdtype": "numerical"
-    },
-    "month": {
-      "sdtype": "categorical"
-    },
-    "duration": {
-      "sdtype": "numerical"
-    },
-    "campaign": {
-      "sdtype": "numerical"
-    },
-    "pdays": {
-      "sdtype": "numerical"
-    },
-    "previous": {
-      "sdtype": "numerical"
-    },
-    "poutcome": {
-      "sdtype": "categorical"
-    },
-    "y": {
-      "sdtype": "categorical"
+      "valmis_aika_t": {
+        "sdtype": "numerical"
     }
   }
+}
 }

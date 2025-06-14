@@ -92,7 +92,7 @@ def calculate_cramers_v_matrix(df, categorical_columns):
 
 
 def compare_distributions(
-    real_df, synthetic_df, categorical_columns, continuous_columns, filepath=None
+    real_df, synthetic_df, categorical_columns, continuous_columns
 ):
     num_plots = len(categorical_columns) + len(continuous_columns)
     num_cols = 4
@@ -190,10 +190,8 @@ def compare_distributions(
         fig.delaxes(axes[i])
 
     plt.tight_layout()
-    if filepath is not None:
-        plt.savefig("{}Variable_Distributions_SynthVAE.png".format(filepath))
 
-    plt.show()
+    return fig
 
 
 def plot_latent_space(
