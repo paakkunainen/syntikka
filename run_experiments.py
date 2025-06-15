@@ -22,7 +22,7 @@ import sys
 import itertools
 
 
-with open("params.json", "r") as f:
+with open("/Workspace/Users/juuso.paakkunainen@productivityleap.com/syntikka/params.json", "r") as f:
     params = json.load(f)
 
 dataset = pd.read_csv(params["data_path"], delimiter=params["delimiter"])

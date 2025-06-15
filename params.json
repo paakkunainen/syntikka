@@ -1,6 +1,6 @@
 {
   "seed": 1337,
-  "tracking_uri": "/Users/juuso.paakkunainen@productivityleap.com/",
+  "tracking_uri": "/Users/juuso.paakkunainen@productivityleap.com/syntikka",
   "primary_key": "id",
   "data_path": "/Workspace/Users/juuso.paakkunainen@productivityleap.com/kaynti.csv",
   "delimiter": ",",
